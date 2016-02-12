@@ -1,7 +1,8 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import pty,os,sys,select,fcntl,termios,struct
 
-def debug(msg):
+def debug(msg):    
     # print msg
     pass
 
@@ -15,7 +16,7 @@ if pid == 0:
     # os.putenv("FOO","xyz")
     os.execvp(cmd[0],cmd)
 
-buf=""  # data sent from the parent process that we haven't processed yet
+buf = bytearray()
 
 while True:
     rr,wr,xr=select.select([fd,0],[],[])
@@ -24,7 +25,7 @@ while True:
             # child process to parent
             try:
                 os.write(1,os.read(fd,1024))
-            except OSError, e:
+            except OSError as e:
                 if e.errno==5:
                     # EOF from terminal
                     _,status=os.waitpid(pid,0)
@@ -38,7 +39,6 @@ while True:
         else:
             # parent to child
             buf += os.read(0,1024)
-            debug("Got %d\n"%len(buf))
             if len(buf)==0:
                 # parent process terminated
                 os.kill(pid,15)
