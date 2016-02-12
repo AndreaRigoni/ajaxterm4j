@@ -676,6 +676,6 @@ public class Terminal {
 
     private static final Logger LOGGER = Logger.getLogger(Terminal.class.getName());
 
-    private static final String NO_CHANGE = "<idem/>";
+    private static final String NO_CHANGE = "<idem></idem>";
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 }

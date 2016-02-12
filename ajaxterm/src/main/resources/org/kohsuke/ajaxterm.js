@@ -146,13 +146,12 @@ ajaxterm.Terminal=function(id,options) {
 				if (r.readyState==4) {
 					if(r.status==200) {
 						window.clearTimeout(error_timeout);
-						if(r.responseText.trim()!="<idem/>") {
-                            dterm.innerHTML = r.responseText;
+						if(r.responseText.trim().replace(/(\r\n|\n|\r)/gm,"")!="<idem></idem>") {
+                                                    dterm.innerHTML = r.responseText;
 							rmax=100;
 						} else {
 							rmax*=2;
-							if(rmax>2000)
-								rmax=2000;
+							if(rmax>2000) rmax=2000;
 						}
 
                         // update cursor position
